@@ -1,4 +1,4 @@
-module github.com/go-kratos/swagger-api
+module github.com/guihouchang/swagger-api
 
 go 1.15
 
