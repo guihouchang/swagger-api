@@ -1,12 +1,20 @@
+<!--
+ * @Author: guihouchang guihouchang@163.com
+ * @Date: 2025-10-28 16:43:59
+ * @LastEditors: guihouchang guihouchang@163.com
+ * @LastEditTime: 2025-10-28 16:45:42
+ * @FilePath: /swagger-api/openapiv2/swagger_ui/dist/index.html
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+-->
 <!-- HTML for static distribution bundle build -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
 	<title>Swagger UI</title>
-	<link rel="stylesheet" type="text/css" href="/q/swagger-ui/swagger-ui.css"/>
-	<link rel="icon" type="image/png" href="/q/swagger-ui/favicon-32x32.png" sizes="32x32"/>
-	<link rel="icon" type="image/png" href="/q/swagger-ui/favicon-16x16.png" sizes="16x16"/>
+	<link rel="stylesheet" type="text/css" href="swagger-ui.css"/>
+	<link rel="icon" type="image/png" href="favicon-32x32.png" sizes="32x32"/>
+	<link rel="icon" type="image/png" href="favicon-16x16.png" sizes="16x16"/>
 	<style>
 		html {
 			box-sizing: border-box;
@@ -30,8 +38,8 @@
 <body>
 <div id="swagger-ui"></div>
 
-<script src="/q/swagger-ui/swagger-ui-bundle.js" charset="UTF-8"></script>
-<script src="/q/swagger-ui/swagger-ui-standalone-preset.js" charset="UTF-8"></script>
+<script src="swagger-ui-bundle.js" charset="UTF-8"></script>
+<script src="swagger-ui-standalone-preset.js" charset="UTF-8"></script>
 <script>
     window.onload = function () {
         const servicesUrl = new URL("/q/services", window.location.href);
