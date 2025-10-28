@@ -7,8 +7,8 @@
 package helloworld
 
 import (
-	reply "github.com/go-kratos/swagger-api/examples/helloworld/reply"
 	_ "github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2/options"
+	reply "github.com/guihouchang/swagger-api/examples/helloworld/reply"
 	_ "google.golang.org/genproto/googleapis/api/annotations"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"

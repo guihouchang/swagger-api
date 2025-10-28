@@ -10,9 +10,9 @@ import (
 	"github.com/go-kratos/kratos/v2/errors"
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/go-kratos/kratos/v2/transport/http"
-	pb "github.com/go-kratos/swagger-api/examples/helloworld/helloworld"
-	reply "github.com/go-kratos/swagger-api/examples/helloworld/reply"
-	"github.com/go-kratos/swagger-api/openapiv2"
+	pb "github.com/guihouchang/swagger-api/examples/helloworld/helloworld"
+	reply "github.com/guihouchang/swagger-api/examples/helloworld/reply"
+	"github.com/guihouchang/swagger-api/openapiv2"
 )
 
 // go build -ldflags "-X main.Version=x.y.z"

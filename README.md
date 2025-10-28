@@ -4,7 +4,7 @@
 在项目中引入openapiv2
 
 ```go
-import	"github.com/go-kratos/swagger-api/openapiv2"
+import	"github.com/guihouchang/swagger-api/openapiv2"
 
 h := openapiv2.NewHandler()
 //将/q/路由放在最前匹配
