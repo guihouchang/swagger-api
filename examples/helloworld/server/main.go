@@ -1,72 +1,34 @@
 package main
 
 import (
-	"context"
-	"fmt"
-	"os"
+	"log"
+	"net/http"
 
-	"github.com/go-kratos/grpc-gateway/v2/protoc-gen-openapiv2/generator"
-	"github.com/go-kratos/kratos/v2"
-	"github.com/go-kratos/kratos/v2/errors"
-	"github.com/go-kratos/kratos/v2/log"
-	"github.com/go-kratos/kratos/v2/transport/http"
-	pb "github.com/guihouchang/swagger-api/examples/helloworld/helloworld"
-	reply "github.com/guihouchang/swagger-api/examples/helloworld/reply"
 	"github.com/guihouchang/swagger-api/openapiv2"
 )
 
-// go build -ldflags "-X main.Version=x.y.z"
-var (
-	// Name is the name of the compiled software.
-	Name = "helloworld"
-	// Version is the version of the compiled software.
-	Version = "v1.0.0"
-)
-
-// server is used to implement helloworld.GreeterServer.
-type server struct {
-	pb.UnimplementedGreeterServer
-}
-
-// SayHello implements helloworld.GreeterServer
-func (s *server) SayHello(ctx context.Context, in *pb.HelloRequest) (*pb.HelloReply, error) {
-	if in.Name == "error" {
-		return nil, errors.BadRequest("custom_error", fmt.Sprintf("invalid argument %s", in.Name))
-	}
-	if in.Name == "panic" {
-		panic("grpc panic")
-	}
-
-	return &pb.HelloReply{Reply: &reply.Reply{Value: fmt.Sprintf("Hello %+v", in.Name)}}, nil
-}
-
 func main() {
-	logger := log.NewStdLogger(os.Stdout)
+	// 创建默认的handler（使用默认路径前缀 /q/swagger-ui）
+	defaultHandler := openapiv2.NewHandler()
 
-	log := log.NewHelper(logger)
-	s := &server{}
-
-	httpSrv := http.NewServer(http.Address(":8000"))
-	pb.RegisterGreeterHTTPServer(httpSrv, s)
-
-	h := openapiv2.NewHandler(openapiv2.WithGeneratorOptions(
-		// you can set UseJSONNamesForFields to false
-		// default is true
-		generator.UseJSONNamesForFields(true),
-	))
-	httpSrv.HandlePrefix("/q/", h)
-
-	/*	fs := httpx.FileServer(httpx.Dir("./dist"))
-		httpSrv.HandlePrefix("/swaggerui/", httpx.StripPrefix("/swaggerui/", fs))*/
-
-	app := kratos.New(
-		kratos.Name(Name),
-		kratos.Server(
-			httpSrv,
-		),
+	// 创建自定义路径前缀的handler（用于测试Nginx rewrite场景）
+	customHandler := openapiv2.NewHandler(
+		openapiv2.WithPathPrefix("/user/q/swagger-ui"),
 	)
 
-	if err := app.Run(); err != nil {
-		log.Error(err)
+	// 启动默认服务器
+	go func() {
+		log.Println("Default Swagger UI server starting on :8000")
+		log.Println("Visit: http://localhost:8000/q/swagger-ui/")
+		if err := http.ListenAndServe(":8000", defaultHandler); err != nil {
+			log.Fatal("Default server failed:", err)
+		}
+	}()
+
+	// 启动自定义路径前缀服务器
+	log.Println("Custom path prefix Swagger UI server starting on :8001")
+	log.Println("Visit: http://localhost:8001/user/q/swagger-ui/")
+	if err := http.ListenAndServe(":8001", customHandler); err != nil {
+		log.Fatal("Custom server failed:", err)
 	}
 }
